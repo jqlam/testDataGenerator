@@ -1,0 +1,14 @@
+# IDE
+.idea
+.vscode
+
+# Python
+build
+dist
+__pycache__/
+.pytest_cache
+.venv
+.env
+
+junk
+output
