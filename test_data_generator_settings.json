@@ -1,0 +1,8 @@
+{
+    "DIRECTORY_DEPTH":4,
+    "TOTAL_FILE_COUNT":10,
+    "MIN_FILE_SIZE":"10KB",
+    "MAX_FILE_SIZE":"1MB",
+    "ROOT_DIRECTORY_NAME": "",
+    "FILE_NAME_PREFIX":"case-01"
+}
