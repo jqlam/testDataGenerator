@@ -22,7 +22,7 @@ pip install Pillow
 pip install deepdiff -->
 
 # README
-Command to run: ./generateTestData.py test_data_generator_settings.json
+Command to run: ```./generateTestData.py test_data_generator_settings.json```
 
 Options file: test_data_generator_settings.json
 Contains 4 required fields and 2 optional fields
