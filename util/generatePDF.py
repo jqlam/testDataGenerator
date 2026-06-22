@@ -67,9 +67,10 @@ def generatePDF(filePrefix, fileSize: int, destinationPath, baseDir, name=None, 
             print(f"Generating {fileName} | Expected size: {fileSize} | Current approximate size: {size}")
             logger.info(f"Generating {fileName} | Expected size: {fileSize} | Current approximate size: {size}")
     pdf.output(path)
-    size = os.path.getsize(path)
-    print(f"PDF size: {size}")
-    logger.info(f"PDF size: {size}")
+    if debug:
+        size = os.path.getsize(path)
+        print(f"PDF size: {size}")
+        logger.info(f"PDF size: {size}")
 
     # 6. Save the final file
     print(f"Generated {path}")

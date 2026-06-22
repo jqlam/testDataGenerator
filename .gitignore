@@ -5,6 +5,8 @@
 # Python
 build
 dist
+util/__pycache__/
+processor/__pycache__/
 __pycache__/
 .pytest_cache
 .venv
