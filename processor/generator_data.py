@@ -2,18 +2,13 @@ import logging
 from datetime import datetime
 import sys
 from pathlib import Path
-from util.generateTXT import generateTXT
-from util.generateDOCX import generateDOCX
-from util.generatePDF import generatePDF
-from util.generatePNG import generatePNG
-from util.generateCSV import generateCSV
-from util.generateJPG import generateJPEG
-from util.generateXLSX import generateXLSX
 from util.randomObjectName import randomObjectName
 from util.determineExtension import generateListExtensions
 from util.generateFileSizes import generateFileSizes
 from util.generateFile import generateFiles
+from util.splitFiles import splitFiles
 from processor.generator_settings import GeneratorSettings
+import multiprocessing
 
 class GeneratorData:
     def __init__(self, settings: GeneratorSettings):
@@ -27,23 +22,6 @@ class GeneratorData:
         self._CURRENT_LEVEL = 1
         self._OUTPUT_DESTINATION = "output"
         self.logger = logging.getLogger(__name__)
-
-    #------------------------------------------------
-    # def _generateFile(self, extension, filesize, path):
-    #     if extension == ".txt":
-    #         generateTXT(self._FILE_NAME_PREFIX, filesize, path, self._BASE_DIR)
-    #     if extension == ".docx":
-    #         generateDOCX(self._FILE_NAME_PREFIX, filesize, path, self._BASE_DIR)
-    #     if extension == ".pdf":
-    #         generatePDF(self._FILE_NAME_PREFIX, filesize, path, self._BASE_DIR)
-    #     if extension == ".png":
-    #         generatePNG(self._FILE_NAME_PREFIX, filesize, path, self._BASE_DIR)
-    #     if extension == ".jpg":
-    #         generateJPEG(self._FILE_NAME_PREFIX, filesize, path, self._BASE_DIR)
-    #     if extension == ".csv":
-    #         generateCSV(self._FILE_NAME_PREFIX, filesize, path, self._BASE_DIR)
-    #     if extension == ".xlsx":
-    #         generateXLSX(self._FILE_NAME_PREFIX, filesize, path, self._BASE_DIR)
 
     #------------------------------------------------
     def _createDirectory(self):
@@ -91,15 +69,27 @@ class GeneratorData:
 
         # create nested directories
         index = 0
+        processes = []
+        numProcesses = self._DIRECTORY_DEPTH
         print(f"File Extension Order: {extensions}")
         self.logger.info(f"File Extension Order: {extensions}")
-        for i in range(self._DIRECTORY_DEPTH):
+        if self._DIRECTORY_DEPTH == 1:
+            fileCountPerLevel = splitFiles(fileCountPerLevel[0])
+            numProcesses = 4
+        for i in range(numProcesses):
             nextIndex = index + fileCountPerLevel[i]
             offset = (i+1) * 100 # Arbitrary Offset to guarantee differnt file names
             directoryPath = self._createDirectory()
-            generateFiles(self._FILE_NAME_PREFIX, extensions[index:nextIndex], fileSizes[index:nextIndex], 
-                          directoryPath, self._BASE_DIR, fileCountPerLevel[i], offset, debug=True)
+            p = multiprocessing.Process(target=generateFiles, args=([self._FILE_NAME_PREFIX, extensions[index:nextIndex], fileSizes[index:nextIndex], 
+                                                                     directoryPath, self._BASE_DIR, fileCountPerLevel[i], offset]))
+            # generateFiles(self._FILE_NAME_PREFIX, extensions[index:nextIndex], fileSizes[index:nextIndex], 
+            #               directoryPath, self._BASE_DIR, fileCountPerLevel[i], offset, debug=True)
+            processes.append(p)
+            p.start()
             index = nextIndex
+
+        for p in processes:
+            p.join()
 
         print (f"\n\n{now} END: {invoker}")
         self.logger.info(f"\n\n{now} END: {invoker}")

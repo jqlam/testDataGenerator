@@ -72,8 +72,9 @@ def generatePNG(filePrefix, fileSize: int, destinationPath, baseDir, name=None, 
             img = img.resize(newSize, resample=Image.Resampling.LANCZOS)
             img.save(path, fileFormat)
             size = os.path.getsize(path)
-            print(f"Canvas has been resized | Expected size: {fileSize} | Current size: {size}")
-            logger.info(f"Canvas has been resized | Expected size: {fileSize} | Current size: {size}")
+            if debug:
+                print(f"Canvas has been resized | Expected size: {fileSize} | Current size: {size}")
+                logger.info(f"Canvas has been resized | Expected size: {fileSize} | Current size: {size}")
             canvas = ImageDraw.Draw(img)
         # print(f"Current File Size: {size}")
     
