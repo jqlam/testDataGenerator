@@ -22,6 +22,8 @@ pip install Pillow
 pip install deepdiff -->
 
 # README
+This program will generate random dummy files for testing purposes. It will generate any number of files roughly split up among a specified amount of levels of directories as well as a manifest file. Outputs may be adjusted by changing the options file. The files generated will be one of six types: TXT, CSV, DOCX, XLSX, PDF, PNG, JPG. File generation may take varied amounts of time depending on which types of files.
+
 Command to run: ```./generateTestData.py test_data_generator_settings.json```
 
 Options file: test_data_generator_settings.json
@@ -46,3 +48,11 @@ Contains 4 required fields and 2 optional fields
 **Other notes:**
 - .docx (Word Documents) must be at least 38 KB
 - .png (Image) will not be bigger than 1 MB
+
+### Manifest File
+The program will generate a manifest file upon running the code (which is an xlsx file that shows information about the files in the directory that was generated). You may also generate a manifest file for a preexisisting by running ```./manifestGenerator.py [INSERT DIRECTORY NAME HERE]``` in the main directory.
+
+The program can also check the differences between two existing manifest files using the command ```./ManifestDiff.py [ManifestFile1] [ManifestFile2]```
+
+### Log File
+While generating the files, the program will keep track of its progress in a log file that can be found in the log directory . If the log directory does not exist, the program will make one and then save the file there.

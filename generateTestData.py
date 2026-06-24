@@ -48,7 +48,8 @@ def process():
 def main():
     invoker = sys._getframe().f_code.co_name
     now = datetime.now()
-    loggerFileName = f"generateTestData-{now.strftime("%Y%m%d%H%M%S")}.log"
+    Path("log").mkdir(parents=True, exist_ok=True)
+    loggerFileName = f"log/generateTestData-{now.strftime("%Y%m%d%H%M%S")}.log"
     logging.basicConfig(filename=loggerFileName, level=logging.INFO)
     print (f"{now} BEGIN: {invoker}")
     logging.info(f"{now} BEGIN: {invoker}")
