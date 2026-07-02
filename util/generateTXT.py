@@ -12,7 +12,7 @@ from util.randomObjectName import randomObjectName
 import logging
 logger = logging.getLogger(__name__)
 
-def generateTXT(filePrefix: str, fileSize: int, destinationPath, baseDir, name=None):
+def generateTXT(filePrefix: str, fileSize: int, destinationPath, baseDir, name=None, utility=False):
     extension = ".txt"
     lorem_path = f"{baseDir}/resources/loremIpsum.txt"
     # lorem_size = os.path.getsize(lorem_path)
@@ -47,5 +47,7 @@ def generateTXT(filePrefix: str, fileSize: int, destinationPath, baseDir, name=N
     with open(path, "w") as output:
         for i in range(loops):
             output.write(lorem)
-    print(f"Generated {path}")
-    logger.info(f"Generated {path}")
+
+    if not utility:
+        print(f"Generated {path}")
+        logger.info(f"Generated {path}")

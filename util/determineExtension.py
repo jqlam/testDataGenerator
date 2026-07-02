@@ -15,16 +15,19 @@ def generateListExtensions(fileSizes, numFiles: int, debug=False):
     return extensions
 
 def determineExtension(size: int):
-    extensions = [".png", ".txt", ".csv", ".jpg", ".pdf", ".xlsx", ".docx"]
+    extensions = [".png", ".xlsx", ".txt", ".csv", ".jpg", ".pdf", ".docx"]
 
     extensionIndex = 0
 
     minDocxSize = 38000;
     maxPngSize = 1000000
+    maxXlsxSize = 7770000
 
     # 38000 aprox min of .docx
     if size < minDocxSize:
         extensionIndex = random.randint(0, 5)
+    elif size > maxXlsxSize:
+        extensionIndex = random.randint(2, 6)
     # PNG generation is really slow past 1 MB
     elif size > maxPngSize: 
         extensionIndex = random.randint(1, 6)

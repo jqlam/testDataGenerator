@@ -6,14 +6,15 @@
 # Output
 #   DOCXFile
 
+#from docx import Document
 from docx import Document
-from docx.shared import Inches
+from util.generateTXT import generateTXT
 from util.randomObjectName import randomObjectName
 import logging
 import os
 logger = logging.getLogger(__name__)
 
-def generateDOCX(filePrefix, fileSize, destinationPath, baseDir, name=None, debug=False):
+def generateTXTDOCX(filePrefix, fileSize, destinationPath, baseDir, name=None, debug=False):
     extension = ".docx"
     lorem_path = f"{baseDir}/resources/loremIpsum.txt"
 
@@ -26,11 +27,7 @@ def generateDOCX(filePrefix, fileSize, destinationPath, baseDir, name=None, debu
         # lorem is 1 KB
         lorem = loremfile.read()
         loremRemainder = loremfile.read((size * 2)%loremSize)
-
-    # Initialize a new document object
-    doc = Document()
     
-
     # GenerateFileName
     fileName = ""
     if filePrefix is not None:
@@ -51,28 +48,33 @@ def generateDOCX(filePrefix, fileSize, destinationPath, baseDir, name=None, debu
         path += f"{baseDir}/output/"
     path += fileName
 
-    # Add a main heading (Level 0)
-    doc.add_heading(fileName[:-5], level=0)
+    # Generate TempTXT
+    generateTXT(None, fileSize, "resources", baseDir, fileName[:-5], utility=True)
 
     # Add a standard text paragraph
-    size = 0
-    prevSize = 0
-    difference = 0
+    doc = Document()
+    doc.add_heading(fileName[:-5], 0)
+
+    with open(f"resources/{fileName[:-5]}.txt", "r") as text:
+        content = text.read()
+    doc.add_paragraph(content)
+    doc.save(path)
+
+    size = os.path.getsize(path)
+    textSize = size - baseSize
     while size < fileSize:
-        doc.add_paragraph(lorem)
+        difference = fileSize - size
+        textSize = size - baseSize
+        loops = int(difference/textSize)
+        if loops < 1: loops = 1
+        for i in range(loops):
+            doc.add_paragraph(content)
         doc.save(path)
-        prevSize = size
         size = os.path.getsize(path)
-        difference = size - prevSize
-        if size < fileSize:
-            loops = int(((fileSize)-size)/difference)
-            for i in range(loops):
-                doc.add_paragraph(lorem)
-            doc.save(path)
-            size = os.path.getsize(path)
         if debug:
             print(f"Genererating {fileName} | Expected size: {fileSize} | Current Size: {size}")
             logger.info(f"Genererating {fileName} | Expected size: {fileSize} | Current Size: {size}")
 
+    os.remove(f"resources/{fileName[:-5]}.txt")
     print(f"Generated {path}")
     logger.info(f"Generated {path}")
