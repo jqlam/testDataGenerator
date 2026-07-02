@@ -1,33 +1,17 @@
-<!-- For Word implementation: pip install python-docx
-    sudo apt update
-    sudo apt install python3-pip python3-venv -y
-    pip3 install python-docx
-Note:(Note: If Ubuntu blocks the global pip installation 
-    due to an externally managed environment, run 
-    python3 -m venv venv && source venv/bin/activate 
-    first, then run pip install python-docx).
-
-     
-  cd summer2026/TestDataGenerator/
-  python3 -m venv venv && source venv/bin/activate
-  pip install python-docx
-  deactivate
-
-Word doc must be > 36 KB
-
-pip install pandas openpyxl
-pip install python-docx
-pip install fpdf2
-pip install Pillow
-pip install deepdiff -->
-
 # README
 This program will generate random dummy files for testing purposes. It will generate any number of files roughly split up among a specified amount of levels of directories as well as a manifest file. Outputs may be adjusted by changing the options file. The files generated will be one of six types: TXT, CSV, DOCX, XLSX, PDF, PNG, JPG. File generation may take varied amounts of time depending on which types of files.
 
+#### SET UP:
+If you do not have the virtual enviornment (venv) set up, then run the command ```./setup-venv.sh``` to set up and install the required libraries. Otherwise, just activate the virtual environment with ```source .venv/bin/activate```.
+
+When you are finished running the program, deactivate the virtual environment with ```deactivate```.
+
+#### RUNNING THE PROGRAM
 Command to run: ```./generateTestData.py test_data_generator_settings.json```
 
 Options file: test_data_generator_settings.json
 Contains 4 required fields and 2 optional fields
+
 #### REQUIRED:
 - DIRECTORY_DEPTH 
     - determines how many layers of directories the files will be generated in
@@ -37,7 +21,7 @@ Contains 4 required fields and 2 optional fields
     - the smallest a file you want generated will be
 - MAX_FILE_SIZE 
     - the largest a file you want generated will be
-- note: file sizes should be in the format (number size) - ex. 10 KB. Can be in KB, MB, and GB
+- note: file sizes should be in the format (number size) - ex. 10 KB. Can be in KB, MB, and GB. Generation speed also tends to slow down the bigger the file is i.e. 10 MB would take a while for certain file types.
 
 #### OPTIONAL:
 - ROOT_DIRECTORY_NAME 

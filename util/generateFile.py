@@ -1,5 +1,6 @@
 from util.generateTXT import generateTXT
 from util.generateDOCX import generateDOCX
+from util.docxFromTXT import generateTXTDOCX
 from util.generatePDF import generatePDF
 from util.generatePNG import generatePNG
 from util.generateCSV import generateCSV
@@ -13,7 +14,8 @@ def generateFiles(fileNamePrefix, extensions, filesizes, path, baseDir, numFiles
         if extensions[i] == ".txt":
             generateTXT(fileNamePrefix, filesizes[i], path, baseDir, names[i])
         if extensions[i] == ".docx":
-            generateDOCX(fileNamePrefix, filesizes[i], path, baseDir, names[i], debug)
+            # generateDOCX(fileNamePrefix, filesizes[i], path, baseDir, names[i], debug)
+            generateTXTDOCX(fileNamePrefix, filesizes[i], path, baseDir, names[i], debug)
         if extensions[i] == ".pdf":
             generatePDF(fileNamePrefix, filesizes[i], path, baseDir, names[i], debug)
         if extensions[i] == ".png":
