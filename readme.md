@@ -40,3 +40,6 @@ The program can also check the differences between two existing manifest files u
 
 ### Log File
 While generating the files, the program will keep track of its progress in a log file that can be found in the log directory . If the log directory does not exist, the program will make one and then save the file there.
+
+### Testing
+If you want to test the program for any reason, the test files are in the tests directory. There is a script and a setting file for testing purposes. Run ```pytest tests/tests.py``` to test the program

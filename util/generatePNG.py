@@ -50,6 +50,18 @@ def generatePNG(filePrefix, fileSize: int, destinationPath, baseDir, name=None, 
     canvas = ImageDraw.Draw(img)
     img.save(path, fileFormat)
     size = os.path.getsize(path)
+
+    # if file is too big
+    while size > fileSize:
+        x = int(x/2)
+        y = int(y/2)
+        img = Image.new("RGB", (x, y), color=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+
+        # Initialize a drawing canvas
+        canvas = ImageDraw.Draw(img)
+        img.save(path, fileFormat)
+        size = os.path.getsize(path)
+
     # print(size)
     prevSize = 0
     while (size < fileSize - 4000):
