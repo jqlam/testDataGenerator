@@ -29,7 +29,6 @@ def generateDOCX(filePrefix, fileSize, destinationPath, baseDir, name=None, debu
 
     # Initialize a new document object
     doc = Document()
-    
 
     # GenerateFileName
     fileName = ""

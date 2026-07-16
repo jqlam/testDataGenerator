@@ -32,6 +32,7 @@ Contains 4 required fields and 2 optional fields
 **Other notes:**
 - .docx (Word Documents) must be at least 38 KB
 - .png (Image) will not be bigger than 1 MB
+- any file that is not a .txt or .csv that is larger than 1 MB will be split up into multiple smaller files inside a zip file
 
 ### Manifest File
 The program will generate a manifest file upon running the code (which is an xlsx file that shows information about the files in the directory that was generated). You may also generate a manifest file for a preexisisting by running ```./manifestGenerator.py [INSERT DIRECTORY NAME HERE]``` in the main directory.

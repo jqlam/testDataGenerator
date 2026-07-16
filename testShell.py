@@ -13,6 +13,7 @@ from util.generateXLSX import generateXLSX
 from util.determineExtension import determineExtension
 from util.determineExtension import generateListExtensions
 from util.docxFromTXT import generateTXTDOCX
+from util.generateZIP import generateZIP
 from datetime import datetime
 
 def main():
@@ -28,10 +29,11 @@ def main():
     # generateDOCX("Case_02", 10000000, "output", baseDir, debug=True)
     # generateTXTDOCX("Case_02", 10000000, "output", baseDir, debug=True)
     # generatePDF("Case_02", 900000, "output/output1", baseDir, debug=True)
-    generatePNG("Case_03", 100000, "output/output1", baseDir, debug=True)
+    # generatePNG("Case_03", 100000, "output/output1", baseDir, debug=True)
     # generateCSV("Case_04", "10 kB", None)
     # generateJPEG("Case01", 900000, "output/output1", baseDir, debug=True)
     # generateXLSX("Case_03", 10000000, "output/output1", baseDir, debug=True)
+    generateZIP("Case_01", 10000000, None, baseDir, "docx", debug=True)
     # TESTXLSX("TEST", 10000000, "output", baseDir, debug=True)
     # print(generateListExtensions(3000, 38000, 7))
     now = datetime.now()
